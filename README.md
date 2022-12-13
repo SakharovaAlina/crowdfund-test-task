@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-check .env file, it should contains :
+check **.env** file, it should contains :
 
 ```bash
 DEBUG_MODE = true
