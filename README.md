@@ -49,6 +49,7 @@ The source code of the server parts you can find in **/server** folder. The serv
 - controllers **/server/controllers** 
 - models **/server/models** 
 - services **/server/services** 
+- cron task in file **/server/cron.ts** 
 
 The source code of the clients parts consist of:
 - web pages **/pages** 
