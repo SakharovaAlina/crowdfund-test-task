@@ -57,3 +57,15 @@ The source code of the clients parts consist of:
 - hooks **/src/hooks** 
 - redux **/src/redux** 
 
+
+## API points
+
+### Fraud by company id
+
+- URL = **/api/markCampaignAsFraud**
+- Method = POST 
+- Content-Type = "applcation-json"
+- body = { arg : { companyId : 12}}
+
+
+
