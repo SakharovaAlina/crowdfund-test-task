@@ -1,12 +1,11 @@
 import mysql2 from 'mysql2';
 import * as awilix from 'awilix';
-import { Sequelize } from 'sequelize';
+import {Sequelize} from 'sequelize';
 
 import controllers from './controllers';
 import services from './services';
 import models from './models';
-import Cron from './cron';
-import { IContextContainer } from './BaseContext';
+import {IContextContainer} from './BaseContext';
 
 declare global {
   var di: any;
@@ -34,11 +33,9 @@ const getDI = (name: string | null) => {
       ...services,
       ...controllers,
       db: awilix.asFunction(initDb).singleton(),
-      cronJob: awilix.asClass(Cron).singleton(),
     });
 
     global.di = container;
-    global.di.resolve('cronJob').init();
   }
   return name ? global.di.resolve(name) : global.di;
 };

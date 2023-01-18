@@ -1,4 +1,4 @@
-import { Exclude } from 'class-transformer';
+import {Exclude} from 'class-transformer';
 
 export interface IContextContainer {
   [key: string]: any;
@@ -15,6 +15,6 @@ export default class BaseContext {
     if (!BaseContext.stopInit) {
       opts.initModels();
       BaseContext.stopInit = true;
-  }    
+    }
   }
 }

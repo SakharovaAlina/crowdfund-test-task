@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { ITableField } from 'src/constants';
+import {ITableField} from 'src/constants';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 
-import { styled } from '@mui/material/styles';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import {styled} from '@mui/material/styles';
+import TableCell, {tableCellClasses} from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 
 //import { Fade } from '@mui/material';
@@ -19,7 +19,7 @@ export interface ICustomTableProps {
   fields: ITableField[];
 }
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(({theme}) => ({
   [`&.${tableCellClasses.head}`]: {
     color: theme.palette.common.black,
     fontSize: 16,
@@ -30,7 +30,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(({theme}) => ({
   '&:nth-of-type(odd), react-reveal:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
@@ -41,7 +41,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export function CustomTable(props: ICustomTableProps) {
-  const { data, fields } = props;
+  const {data, fields} = props;
   let [active, setActive] = React.useState(false);
 
   return (
@@ -61,8 +61,7 @@ export function CustomTable(props: ICustomTableProps) {
           {data?.map((row: any) => (
             <StyledTableRow
               key={'row_' + row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+              sx={{'&:last-child td, &:last-child th': {border: 0}}}>
               {fields.map((o, i) => (
                 <StyledTableCell key={'custom_table_r_' + i} align={o.align}>
                   {o.field instanceof Function ? o.field(row) : row[o.field]}

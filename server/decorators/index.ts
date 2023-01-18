@@ -4,4 +4,4 @@ import POST from './post';
 
 import run from './run';
 
-export { GET, POST, run, USE };
+export {GET, POST, run, USE};

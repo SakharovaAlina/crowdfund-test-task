@@ -4,7 +4,7 @@ import addFormats from 'ajv-formats';
 import status from 'server/http-status';
 
 export default function validate(schema) {
-  const ajv = new Ajv({ allErrors: true });
+  const ajv = new Ajv({allErrors: true});
   ajvErrors(ajv);
   addFormats(ajv);
   const validate = ajv.compile(schema);

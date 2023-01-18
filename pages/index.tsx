@@ -1,96 +1,49 @@
-import React, { useCallback, useMemo } from 'react';
-import moment from 'moment-timezone';
-import type { NextPage } from 'next';
-
-import Button from '@mui/material/Button';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import { openDonate } from 'src/redux/modalDonate';
+import type {NextPage} from 'next';
 
 import Layout from 'src/components/Layout';
-import { useCompany } from 'src/hooks/company';
+import {useTemplate} from 'src/hooks/template';
 import di from 'server/container';
 
-import { ModalDonate } from 'src/components/ModalDonate';
-import { useDispatch } from 'react-redux';
-import { IDonateForm, ITableField, ModalAction } from 'src/constants';
-import { CustomTable } from 'src/components/CustomTable';
-import { useDonation } from 'src/hooks/donation';
+import {useDispatch} from 'react-redux';
+import {useCertificate} from 'src/hooks/certificate';
+import TemplateList from 'src/components/TemplateList';
+import HomeIcon from '@mui/icons-material/Home';
 
-const Home: NextPage = (props) => {
-  const { data, error } = useCompany();
-  const { trigger } = useDonation();
-  const dispatch = useDispatch();
+import Stack from '@mui/material/Stack';
 
-  const loading = !data && !error;
-  console.log(
-    'data',
-    data?.data.filter((el) => el.status == 'active')
-  );
-  const filteredData = data
-    ? data.data.filter((el) => el.status == 'active')
-    : data;
+const Home: NextPage = props => {
+    const tmp = useTemplate();
 
-  const handleActionClick = useCallback(
-    async (action: ModalAction, data: IDonateForm, company: any) => {
-      await trigger({ ...data, companyId: company.id });
-    },
-    []
-  );
+    const crt = useCertificate();
+    const dispatch = useDispatch();
 
-  const fields: ITableField[] = useMemo(
-    () => [
-      {
-        title: 'Compaign Name',
-        align: 'left',
-        field: 'name',
-      },
-      {
-        title: 'Goal',
-        align: 'center',
-        field: 'goal',
-      },
-      {
-        title: 'Status',
-        align: 'center',
-        field: 'status',
-      },
-      {
-        title: 'Owner',
-        align: 'left',
-        field: (row: any) => row.owner.name,
-      },
-      {
-        title: 'Expired',
-        align: 'right',
-        field: (row: any) => moment.unix(row.expirationDate).format('LL'),
-      },
-      {
-        title: 'Action',
-        align: 'right',
-        field: (row: any) => (
-          <Button
-            size="small"
-            startIcon={<MonetizationOnIcon />}
-            onClick={() => dispatch(openDonate(row))}
-          >
-            Donate
-          </Button>
-        ),
-      },
-    ],
-    [data]
-  );
+    console.log('data', tmp.data, crt.data);
+    const templateData = tmp.data ? tmp.data.data : tmp.data;
+    const certificateData = crt.data ? crt.data.data : crt.data;
 
-  return (
-    <Layout>
-      <CustomTable data={filteredData} fields={fields} />
-      <ModalDonate onActionClick={handleActionClick} />
-    </Layout>
-  );
+    return (
+        <Layout
+            breadcrumbs={[
+                {
+                    url: '/',
+                    title: 'Home',
+                    icon: <HomeIcon sx={{mr: 0.5}} fontSize="inherit" />,
+                },
+            ]}
+            action={{label: 'New Certificate', url: '/editor'}}>
+            <Stack spacing={2} alignItems="stretch">
+                <TemplateList
+                    templates={certificateData}
+                    headerList="Certificates"
+                />
+            </Stack>
+        </Layout>
+    );
 };
 
-export async function getServerSideProps({ req, res }) {
-  return di('CompanyController').run(req, res);
+export async function getServerSideProps({req, res}) {
+    const cert = await di('CertificateController').run(req, res);
+    const temp = await di('TemplateController').run(req, res);
+    return {props: {cert, temp}};
 }
-
 export default Home;

@@ -1,9 +1,9 @@
-import { asClass } from 'awilix';
+import {asClass} from 'awilix';
 
-import CompanyController from './CompanyController';
-import DonationController from './DonationController';
+import CertificateController from './CertificateController';
+import TemplateController from './TemplateController';
 
 export default {
-  CompanyController: asClass(CompanyController).singleton(),
-  DonationController: asClass(DonationController).singleton(),
+  CertificateController: asClass(CertificateController).singleton(),
+  TemplateController: asClass(TemplateController).singleton(),
 };

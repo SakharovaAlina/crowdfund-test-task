@@ -1,5 +1,5 @@
-import { compose } from 'redux';
-import { configureStore } from '@reduxjs/toolkit';
+import {compose} from 'redux';
+import {configureStore} from '@reduxjs/toolkit';
 import modalDonate from 'src/redux/modalDonate';
 
 const composeEnhancers =

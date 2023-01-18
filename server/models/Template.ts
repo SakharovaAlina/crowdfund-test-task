@@ -1,21 +1,22 @@
 import {Model, DataTypes, BuildOptions} from 'sequelize';
 import {IContextContainer} from 'server/BaseContext';
 
-interface IUser extends Model {
+interface ITemplate extends Model {
   id: number;
   name: string;
+  fileName: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export type UserType = typeof Model & {
-  new (values?: object, options?: BuildOptions): IUser;
+export type TemplateType = typeof Model & {
+  new (values?: object, options?: BuildOptions): ITemplate;
   initModel(): void;
 };
 
 export default (ctx: IContextContainer) => {
-  const User = <UserType>ctx.db.define(
-    'users',
+  const Template = <TemplateType>ctx.db.define(
+    'templates',
     {
       id: {
         allowNull: false,
@@ -26,12 +27,11 @@ export default (ctx: IContextContainer) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          len: {
-            args: [6, 255],
-            msg: 'Name must be between 6 and 255 characters in length',
-          },
-        },
+        unique: true,
+      },
+      fileName: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       createdAt: {
         allowNull: true,
@@ -47,14 +47,14 @@ export default (ctx: IContextContainer) => {
     }
   );
 
-  User.initModel = () => {
-    User.hasMany(ctx.Certificate, {
+  Template.initModel = () => {
+    Template.hasMany(ctx.Certificate, {
       sourceKey: 'id',
-      foreignKey: 'userId',
-      as: 'user',
+      foreignKey: 'templateId',
+      as: 'template',
       onDelete: 'CASCADE',
     });
   };
 
-  return User;
+  return Template;
 };

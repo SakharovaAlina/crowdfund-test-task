@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "crowdfund",
-    "password": "crowdfund",
-    "database": "crowdfund",
-    "host": "127.0.0.1",
+    "username": "certificates",
+    "password": "certificates",
+    "database": "certificates",
+    "host": "localhost",
     "dialect": "mysql"
   }
 }

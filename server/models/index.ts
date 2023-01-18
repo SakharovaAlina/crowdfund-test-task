@@ -1,29 +1,29 @@
-import { asFunction } from 'awilix';
-import { IContextContainer } from 'server/BaseContext';
+import {asFunction} from 'awilix';
+import {IContextContainer} from 'server/BaseContext';
 
-import Company, { CompanyType } from './Company';
-import User, { UserType } from './User';
-import Donation, { DonationType } from './Donation';
+import Template, {TemplateType} from './Template';
+import User, {UserType} from './User';
+import Certificate, {CertificateType} from './Certificate';
 
 export interface IModelContainer {
   initModels: () => void;
   User: UserType;
-  Company: CompanyType;
-  Donation: DonationType;
+  Template: TemplateType;
+  Certificate: CertificateType;
 }
 
 const initModels = (ctx: IContextContainer) => {
-  const { Company, User, Donation } = ctx;
+  const {Template, User, Certificate} = ctx;
   return () => {
-    Company.initModel();
+    Template.initModel();
     User.initModel();
-    Donation.initModel();
+    Certificate.initModel();
   };
 };
 
 export default {
   initModels: asFunction(initModels).singleton(),
   User: asFunction(User).singleton(),
-  Company: asFunction(Company).singleton(),
-  Donation: asFunction(Donation).singleton(),
+  Template: asFunction(Template).singleton(),
+  Certificate: asFunction(Certificate).singleton(),
 };
